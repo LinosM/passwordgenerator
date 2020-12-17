@@ -19,15 +19,15 @@ function randomNum(x) {
   return Math.floor(Math.random() * x);
 }
 
-
+// Shuffles the password via array sort
 function shuffle(pass) {
-  var tempArray = pass.split('');           // Convert String to array
+  var tempArray = pass.split('');
   
   tempArray.sort(function() {
     return 0.5 - Math.random();
   });
-  pass = tempArray.join('');                // Convert Array to string
-  return pass;                              // Return shuffled string
+  pass = tempArray.join('');                
+  return pass;                              
 }
 
 function generatePassword() {
@@ -64,7 +64,9 @@ function generatePassword() {
       alert("Error, choose at least one character type");
     }
 
-    // Adds the character types the user chooses to the allowSet array and adds in 1 random character from each set to the password to guarantee the password has at least 1 character type from each specified criteria
+    // Adds the character types the user chooses to the allowSet array
+
+    // Also adds in 1 random character from each set to the password to guarantee the password has at least 1 character type from each specified criteria
     if (isLower) {
       allowedSet.push(lowerSet);
       password += arrayRandomizer(lowerSet);
@@ -81,17 +83,13 @@ function generatePassword() {
       allowedSet.push(specSet);
       password += arrayRandomizer(specSet);
     }
-
-    console.log(allowedSet);
   }
-
-  
 
   for (i = 0; i < passLength - allowedSet.length; i++) {
     // x = picks random number to use for the allowedSet array
     var x = randomNum(allowedSet.length);
     
-    // y = picks a random number from the length of the selected random array
+    // y = picks a random character from the previously selected array (x)
     var y = randomNum(allowedSet[x].length);
 
     // Random characters are added to the password from x array and y subarray
@@ -99,13 +97,8 @@ function generatePassword() {
 
   }
 
-  console.log("Before shuffle: " + password);
-
-  // Password is shuffled one last time so the first 1-4 characters arent always in order of the sets created
+  // Password is shuffled one last time so the first 1-4 characters arent always in a set order created from the arrayRadomizer() earlier
   password = shuffle(password);
-
-  console.log("After shuffle: " + password);
-
   return password;
 
 }
